@@ -27,7 +27,7 @@ export default class ItemCom extends Component<ItemComProps> {
   render() {
     return (
         <tr onClick={this.handleClick} className="!z-50 !cursor-pointer hover:bg-rose-100 h-10">
-        <td><img className="h-10 w-10" style={{borderRadius: "15px"}} src={`http://localhost:3000/uploads/${this.props.photo}`} alt="" /></td>
+        <td><img className="h-10 w-10" style={{borderRadius: "100%"}} src={`http://localhost:3000/uploads/${this.props.photo}`} alt="" /></td>
         <td>{this.props.bookID}</td>
         <td>{this.props.bookName}</td>
         <td>{this.props.catagory}</td>
