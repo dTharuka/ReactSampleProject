@@ -1,401 +1,288 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
-import React, { ChangeEvent, Component, useState } from 'react'
-import axios from '../../axios';
-import CustomerCom from '../../components/CustomerCom/CustomerCom';
-import InnerHeader from '../../components/InnerHeader/InnerHeader'
-import $ from 'jquery';
+import React, { ChangeEvent, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import $, { data } from "jquery";
+import { Container, Row, Col } from 'react-bootstrap';
+import { Page, Text, View, Document, StyleSheet, PDFViewer, pdf } from '@react-pdf/renderer';
+import Pdf from '../../components/PDF/Pdf';
+import ReactDOM from 'react-dom';
+import { renderToString } from 'react-dom/server';
+import jsPDF from 'jspdf';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
-type CustomerDetails={
-    _id:string;
-    customerID:string;
-    customerName:string;
-    customerAddress:string;
-    customerContact:string;
-    customerEmail:string;
-    customerSalary:string;
-};
-
-type CustomerProps={};
-type CustomerState={
-    customerList:CustomerDetails[];
-    customerID:string;
-    customerName:string;
-    customerAddress:string;
-    customerContact:string;
-    customerEmail:string;
-    customerSalary:string;
-    click:boolean;
-    isClicked: boolean;
+type customerProp={
+  cusID:string;
+  cusName:string;
+  cusEmail:string;
+  cusSalary:string;
+  cusAddress:string;
+  cusPostalCode:string;
 }
 
 
-let count;
-export default class Customer extends Component<CustomerProps,CustomerState> {
+function Customer() {
+  const [cusID, idChange] = useState("");
+  const [cusName, nameChange] = useState("");
+  const [cusEmail, emailChange] = useState("");
+  const [cusSalary, salaryChange] = useState("");
+  const [cusAddress, addressChange] = useState("");
+  const [cusPostalCode, postalCodeChange] = useState("");
 
   
 
-  constructor(props:CustomerProps){
-    super(props);
-    this.state={
-    customerList:[],
-    customerID:"",
-    customerName:"",
-    customerAddress:"",
-    customerContact:"",
-    customerEmail:"",
-    customerSalary:"",
-    click:false,
-    isClicked: false
+  
+  
+  
+
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "cusID":
+        idChange(value);
+        break;
+      case "cusName":
+        nameChange(value);
+        break;
+      case "cusEmail":
+        emailChange(value);
+        break;
+      case "cusSalary":
+        salaryChange(value);
+        break;
+      case "cusAddress":
+        addressChange(value);
+        break;
+      case "cusPostalCode":
+        postalCodeChange(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  // const handleSubmit = () => {
+  //   let responseBody = {
+  //     cusID: $("#cusID").val(),
+  //     cusName: $("#cusName").val(),
+  //     cusEmail: $("#cusEmail").val(),
+  //     cusSalary: $("#cusSalary").val(),
+  //     cusAddress: $("#cusAddress").val(),
+  //     cusPostalCode: $("#cusPostalCode").val(),
+  //   };
+  //   alert(JSON.stringify(responseBody));
+  // };
+
+  const handleSubmit = () => {
+    let responseBody: customerProp = {
+      cusID: cusID,
+      cusName: cusName,
+      cusEmail: cusEmail,
+      cusSalary: cusSalary,
+      cusAddress: cusAddress,
+      cusPostalCode: cusPostalCode,
     };
-  }
-
-  componentDidMount():void{
-    this.getAllCustomers();
-  }
-
-  handleIsClick = () => {
-    this.setState({ isClicked: true });
+    // alert(JSON.stringify(responseBody));
   };
 
-  getAllCustomers=()=>{
-    axios.get("customer").then((res)=>{
-      console.log(res.data.responseData);
-      this.setState((prevState)=>({
-        ...prevState,
-        customerList:res.data.responseData,
-      }));
-      this.handleCustomerID();
-    })
-  }
 
-  handleInput=(event:ChangeEvent<HTMLInputElement>)=>{
+  const handleSaveCustomer = () => {
+    handleSubmit();
+    const pdfComponent= 
+      <Pdf
+        cusID={"Customer ID: "+$("#cusID").val()?.toString()}
+        cusName={"Name: "+$("#cusName").val()?.toString()}
+        cusEmail={"Email: "+$("#cusEmail").val()?.toString()}
+        cusSalary={"Salary: "+$("#cusSalary").val()?.toString()}
+        cusAddress={"Address: "+$("#cusAddress").val()?.toString()}
+        cusPostalCode={"Postal Code:"+$("#cusPostalCode").val()?.toString()}
+      />
+      
 
-    $("#customerName").keyup(function () {
-      if (/^[A-Za-z]+$/.test(event.target.value)) {
-        $("#customerName").css({
-          color: "green"
-        });
-      }else{
-        $("#customerName").css({
-          color: "red"
-        });
-      }
+
+
+    const pdfContainer = document.getElementById('cusPdf');
+    if (pdfContainer) {
+      pdfContainer.innerHTML = ''; 
+      ReactDOM.render(pdfComponent, pdfContainer);
+
+
+      //-----new--------
+      const downloadBtn = document.createElement('button');
+      downloadBtn.style.background = '#039b48';
+      downloadBtn.style.color = '#ffffff';
+      downloadBtn.style.borderRadius = '5px';
+      downloadBtn.style.marginTop = '3px';
+      downloadBtn.style.fontSize = '90%';
+      downloadBtn.style.width = '40%';
+      downloadBtn.style.padding = '3px';
+    downloadBtn.innerText = 'Download PDF';
+
+    
+    downloadBtn.addEventListener('click', () => {
+      
+      const pdf = new jsPDF();
+
+
+      const cusID = $("#cusID").val()?.toString();
+      const cusName = $("#cusName").val()?.toString();
+      const cusEmail = $("#cusEmail").val()?.toString();
+      const cusSalary = $("#cusSalary").val()?.toString();
+      const cusAddress = $("#cusAddress").val()?.toString();
+      const cusPostalCode = $("#cusPostalCode").val()?.toString();
+
+      const content = `
+    Customer ID: ${cusID}
+    Name: ${cusName}
+    Email: ${cusEmail}
+    Salary: ${cusSalary}
+    Address: ${cusAddress}
+    Postal Code: ${cusPostalCode}
+  `;
+
+  // Add the content to the PDF
+  pdf.text(content, 10, 10);
+      
+      
+      pdf.save('customer_details.pdf');
     });
-
-    $("#customerAddress").keyup(function () {
-      if (/^[A-Za-z]+$/.test(event.target.value)) {
-        $("#customerAddress").css({
-          color: "green"
-        });
-      }else{
-        $("#customerAddress").css({
-          color: "red"
-        });
-      }
-    });
+    pdfContainer.appendChild(downloadBtn);
 
 
-    $("#customerContact").keyup(function () {
-      if (/^[0-9]+$/.test(event.target.value)) {
-        $("#customerContact").css({
-          color: "green"
-        });
-      }else{
-        $("#customerContact").css({
-          color: "red"
-        });
-      }
-    });
-
-    $("#customerEmail").keyup(function () {
-      if (/^[A-Za-z]+$/.test(event.target.value)) {
-        $("#customerEmail").css({
-          color: "green"
-        });
-      }else{
-        $("#customerEmail").css({
-          color: "red"
-        });
-      }
-    });
-
-    $("#customerSalary").keyup(function () {
-      if (/^[0-9]+$/.test(event.target.value)) {
-        $("#customerSalary").css({
-          color: "green"
-        });
-      }else{
-        $("#customerSalary").css({
-          color: "red"
-        });
-      }
-    });
+    }
+    }
 
 
-    const{name,value,type}= event.target;
+
+
+
+
+  //   handleSubmit();
+  //   const pdfComponent = <Pdf cusID={$("#cusID").val()?.toString()} cusName={$("#cusName").val()?.toString()} cusEmail={$("#cusEmail").val()?.toString()} cusSalary={$("#cusSalary").val()?.toString()} cusAddress={$("#cusAddress").val()?.toString()} cusPostalCode={$("#cusPostalCode").val()?.toString()} />;
+  //   const pdfString = renderToString(
+  //     <PDFViewer>
+  //       <Document>{pdfComponent}</Document>
+  //     </PDFViewer>
+  //   );
   
-    const inputValue=type === "number" ? parseInt(value):value;
+  //   const pdf = new jsPDF();
+  //   const pdfContainer = document.getElementById('cusPdf');
   
-    this.setState((prevState)=>({
-        ...prevState,
-        [name]:value,
-    }));
-  }
+  //   if (pdfContainer) {
+  //     pdfComponent.html(pdfString);
+  //     pdf.innerHTML = '';
 
-  //--------------------------------text field clear karanne meken-------------------------------------
+  //     const downloadBtn = document.createElement('button');
+  //     downloadBtn.innerText = 'Download PDF';
+  //     downloadBtn.addEventListener('click', () => {
+  //       pdf.save('customer_details.pdf');
+  //     });
+  //     pdfContainer.appendChild(downloadBtn);
+  //   }
 
-clearTextField = () => {
-  this.setState((prevState)=>({
-    ...prevState,
-    customerID:"",
-    customerName:"",
-    customerAddress:"",
-    customerContact:"",
-    customerEmail:"",
-    customerSalary:""
-}));
-}
+  // };
 
-
-  //-----------------------------------------meka update karanna gahapu eka----------------------------------
-handleUpdate = () => {
-  const { customerID, customerName, customerAddress, customerContact, customerEmail, customerSalary}=this.state; 
-
-  let updateCustomer={
-      customerID:customerID,
-      customerName:customerName,
-      customerAddress:customerAddress,
-      customerContact:customerContact,
-      customerEmail:customerEmail,
-      customerSalary:customerSalary
-  };
-
-  if (window.confirm('Do you want to update this Customer ?')) {
-    axios
-      .put(`customer/${customerID}`, updateCustomer)
-      .then(() => {
-        this.getAllCustomers();
-        alert('Data Updated successfully. ');
-        this.clearTextField();
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('Error updating data. Because: ' + error);
-      });
-  }
-
-}
-//-----------------------------------------------------the end----------------------------------
-
-
-//-----------------------------------------meka delete karanna gahapu eka----------------------------------
-handleDelete = () => {
-  const {customerID}=this.state; 
-  if (window.confirm('Do you want to remove this Customer ?')) {
-    axios
-      .delete(`customer/${customerID}`)
-      .then(() => {
-        this.getAllCustomers();
-        alert('Data deleted successfully. ');
-        this.clearTextField();
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('Error deleting data. ');
-      });
-  }
-}
-//-----------------------------------------------------the end----------------------------------
-
-//====================================set value to text field=========================================================
-setText=(customerID:string,customerName:string,customerAddress:string,customerContact:string,customerEmail:string,customerSalary:string)=>{
-  this.setState((prevState)=>({
-    ...prevState,
-      customerID:customerID,
-      customerName:customerName,
-      customerAddress:customerAddress,
-      customerContact:customerContact,
-      customerEmail:customerEmail,
-      customerSalary:customerSalary
-}));
-}
-
-//---------------------------------------itemID auto generat function-----------------------------------
-handleCustomerID = (): void => {
-  if(!this.state.click){
-    this.getAllCustomers();
-  count=this.state.customerList.length+1;
-  let setCount = count.toString();
-
-  this.setState((prevState)=>({
-    ...prevState,
-    customerID:"C00"+setCount,
-  }));
-  }
-};
-
-
-
-  render() {
-    return (
+  return (
+    <div className=' bg-white w-10/12 h-full absolute right-0 top-0 '>
       <div>
-        <InnerHeader/>
-        <h1 className="mb-10 mt-24 text-center animate-bounce ..." style={{ fontSize: "32px"}}>Your Customers</h1>
 
-        <form className=" mx-20 py-8 px-10 grid grid-cols-2 grid-rows-4" onSubmit={this.handleDelete} style={{ width: "90%", borderRadius: "10px", gridGap: "10px",boxShadow:
-              " rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px", }}>
-              <TextField
-                label="Customer ID"
-                type="text"
-                variant="outlined"
-                placeholder="Enter your valid ID here"
-                name="customerID"
-                id='customerID'
-                value={this.state.customerID}
-                onChange={this.handleInput}
-                required
-              />
-              <TextField
-                label="Customer Name"
-                type="text"
-                variant="outlined"
-                placeholder="Enter your Name here"
-                name="customerName"
-                id='customerName'
-                value={this.state.customerName}
-                onChange={this.handleInput}
-                // focused={this.state.isClicked}
-                required
-              />
 
-            <TextField
-                label="Customer Address"
-                type="text"
-                variant="outlined"
-                placeholder="Enter your Address here"
-                name="customerAddress"
-                id='customerAddress'
-                value={this.state.customerAddress}
-                onChange={this.handleInput}
-                // focused={this.state.isClicked}
-                required
-              />
+<Form className=' mt-24 ml-5 pl-5 w-3/5 rounded-lg' style={{boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+{/* className='grid grid-rows-3 grid-cols-3  mt-24 mx-10' */}
+<Row>
+  <Col sm={12} lg={4} md={6}>
+  <Form.Group className="mt-4 text-center" controlId="customerID">
+        <Form.Label >Customer ID</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusID' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{width:"90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer ID" />
+      </Form.Group></Col>
 
-            <TextField
-                label="Customer Contact"
-                type="text"
-                variant="outlined"
-                placeholder="Enter your Contact here"
-                name="customerContact"
-                id='customerContact'
-                value={this.state.customerContact}
-                onChange={this.handleInput}
-                // focused={this.state.isClicked}
-                required
-              />
+      <Col sm={12} lg={4} md={6}>
+      <Form.Group className="mt-4 text-center" controlId="customerName">
+        <Form.Label >Customer Name</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusName' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer Name" />
+      </Form.Group></Col>
 
-            <TextField
-                label="Customer Email"
-                type="email"
-                variant="outlined"
-                placeholder="Enter your Email here"
-                name="customerEmail"
-                id='customerEmail'
-                value={this.state.customerEmail}
-                onChange={this.handleInput}
-                // focused={this.state.isClicked}
-                required
-              />
+        <Col sm={12} lg={4} md={6}>
+        <Form.Group className="mt-4 text-center" controlId="customerEmail">
+        <Form.Label >Customer E-mail</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusEmail' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="email" placeholder="Enter customer E-mail" />
+      </Form.Group></Col>
+        {/* </Row> */}
 
-            <TextField
-                label="Customer Salary"
-                type="text"
-                variant="outlined"
-                placeholder="Enter your Salary here"
-                name="customerSalary"
-                id='customerSalary'
-                value={this.state.customerSalary}
-                onChange={this.handleInput}
-                // focused={this.state.isClicked}
-                required
-              />
+        {/* <Row> */}
+  <Col sm={12} lg={4} md={6}>
+  <Form.Group className=" mb-4 text-center" controlId="customerSalary">
+        <Form.Label >Customer Salary</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusSalary' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer Salary" />
+      </Form.Group></Col>
 
-            
-              <button onClick={this.handleUpdate} className="w-full bg-accent-navy-200 text-white bg-yellow-600 py-2 rounded m-0" type='button'>
-                <h6>Update</h6>
-              </button>
+      <Col sm={12} lg={4} md={6}>
+      <Form.Group className="mb-4 text-center" controlId="customerAddress">
+        <Form.Label >Customer Address</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusAddress' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer Address" />
+      </Form.Group></Col>
 
-              <button onClick={this.handleDelete} type='button' className="w-full bg-accent-navy-200 text-white bg-red-600 py-2 rounded m-0">
-                <h6>Delete</h6>
-              </button>
-            </form>
+        <Col sm={12} lg={4} md={6}>
+        <Form.Group className="mb-4 text-center" controlId="postalCode">
+        <Form.Label>Postal Code</Form.Label>
+        <Form.Control onChange={handleInputChange} id='cusPostalCode' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter Postal Code" />
+      </Form.Group></Col>
+        {/* </Row> */}
 
-            <TableContainer
-          style={{
-            boxShadow:
-              " rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
-            borderRadius: "15px",
-          }}
-          component={Paper}
-          className="mt-5"
-        >
-          <Table aria-label="simple table">
-            <TableHead className="" style={{ backgroundColor: '#f9004d' }}>
-              <TableRow >
-                <TableCell >
-                  Customer ID
-                </TableCell>
-                <TableCell >
-                  Customer Name
-                </TableCell>
-                <TableCell >
-                  Customer Address
-                </TableCell>
-                <TableCell >
-                  Customer Contact
-                </TableCell>
-                <TableCell >
-                  Customer Email
-                </TableCell>
-                <TableCell >
-                  Customer Salary
-                </TableCell>
-                <TableCell >
-                  _id
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-
-{this.state.customerList.map(customer=>(
-  <CustomerCom key={customer._id} customerID={customer.customerID} customerName={customer.customerName} customerAddress={customer.customerAddress} customerContact={customer.customerContact} customerEmail={customer.customerEmail} customerSalary={customer.customerSalary} _id={customer._id} setText={this.setText}></CustomerCom>
-  ))}
+        {/* <Row> */}
+        <Col sm={12} lg={2} md={4}>
+        <Button
+            size='sm'
+            id='saveBtn'
+            className=' mb-2 border-0 w-28 rounded'
+            style={{ background: "#039b48"}}
+            variant="primary"
+            type="button"
+            onClick={(e) => {
+              // handleSubmit();
+              handleSaveCustomer();
+              // $("#cusPdf").append(<Pdf cusID={$("#cusID").val()?.toString()} cusName={''} cusEmail={''} cusSalary={''} cusAddress={''} cusPostalCode={''}/>);
+              // <Pdf cusID={cusID} cusName='' cusEmail='' cusSalary='' cusAddress='' cusPostalCode='' />;
+              // $("#cusPdf").append(<Pdf cusID={cusID} cusName='' cusEmail='' cusSalary='' cusAddress='' cusPostalCode='' />);
               
+            }}
+          >
+            Save User
+          </Button>
+          </Col>
 
-              {/* <TableRow>
-                <TableCell>C001</TableCell>
-                <TableCell>Maneesha</TableCell>
-                <TableCell>Galle</TableCell>
-                <TableCell>077-9054432</TableCell>
-                <TableCell>gune@gmail.com</TableCell>
-                <TableCell>35000</TableCell>
-              </TableRow>
+          <Col sm={12} lg={2} md={4}>
+          <Button
+            size='sm'
+            className=' mb-2 border-0 w-28 rounded'
+            style={{ background: "#ffa502"}}
+            variant="primary"
+            type="button"
+          >
+            Update User
+          </Button>
+          </Col>
 
-              <TableRow>
-                <TableCell>C002</TableCell>
-                <TableCell>Sasmitha</TableCell>
-                <TableCell>Matara</TableCell>
-                <TableCell>071-2344432</TableCell>
-                <TableCell>sas@gmail.com</TableCell>
-                <TableCell>40000</TableCell>
-              </TableRow> */}
-
-            </TableBody>
-          </Table>
-        </TableContainer>
-            
+          <Col sm={12} lg={2} md={4}>
+          <Button
+            size='sm'
+            className='  mb-2 border-0 w-28 rounded'
+            style={{ background: "#ff4757"}}
+            variant="primary"
+            type="button"
+          >
+            Delete User
+          </Button>
+          </Col>
+        </Row>
+      </Form> 
+      
+      
       </div>
-    )
-  }
+      <div className=' absolute  mt-10 left-2/3 top-14' id='cusPdf'></div>
+    </div>
+  );
 }
+
+export default Customer;

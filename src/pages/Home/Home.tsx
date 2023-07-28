@@ -1,37 +1,104 @@
-import React, { Component } from 'react'
-import Header from '../../components/Header/Header'
-import HomeImage from "./../../assets/homePhoto.jpg";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import Content from '../../components/Content/Content';
+import Header from '../../components/Header/Header';
+import SideContent from '../../components/SideContent/SideContent';
+import SideHeader from '../../components/SideHeader/SideHeader';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
-export default class Home extends Component {
-  render() {
-    return (
-      <div>
-        <Header/>
-        <h1 className="mb-5 mt-32 text-center animate-bounce ..." style={{ fontSize: "32px"}}>Welcome to BISMARCK Book Store</h1>
-        <div className="grid grid-cols-2 grid-rows-1">
-        <img src={HomeImage} alt="homePhoto" className=" ml-56 mt-20 w-1/2 h-96" style={{ borderRadius: "10px", gridGap: "10px" , boxShadow:
-              " rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",}}/>
-              {/* <h1>Helloooooooooooooooooo</h1> */}
-              <div className="mt-24" style={{ fontSize: "22px"}}>
-                <h1>Reading books offers a multitude of benefits,</h1>
-                <h1>including knowledge acquisition, mental stimulation,</h1>
-                <h1>stress reduction, empathy development,</h1>
-                <h1>improved language skills, memory enhancement,</h1>
-                <h1>and entertainment. It fosters personal growth,</h1>
-                <h1>expands horizons, and provides a lifelong source </h1>
-                <h1>of learning and enjoyment.</h1>
-              </div>
-              {/* <pre>Reading books offers a multitude of benefits,
-                 including knowledge acquisition, mental stimulation,
-                stress reduction, empathy development, 
-                improved language skills, memory enhancement,
-                 and entertainment. It fosters personal growth,
-                  expands horizons, and provides a lifelong source 
-                  of learning and enjoyment.</pre> */}
+
+
+function Home() {
+
+
+
+  return (
+    
+    // <div style={{position:"absolute", height:"92%", width: "85%",left:"15%",background: "#ffffff",top:"8%"}}>
+    <div className=' bg-white w-10/12 h-full absolute right-0 top-0'>
+       {/* <Header />
+      <SideContent/>
+      <SideHeader/>
+      <Content /> */}
+
+      {/* <div className='flex mx-10 mt-10' style={{ gap: '10px',height:"20%"}}>
+        <div style={{ flex: 1 ,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}}>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}>Available Customers</h1>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>38</h1>
         </div>
+        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Employees </h1>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>25</h1>
+        </div>
+        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Items </h1>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>43</h1>
+        </div>
+        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Bookings </h1>
+        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>21</h1>
+        </div>
+</div>
 
-      </div>
-    )
-  }
+<div className='mx-10 mt-10' style={{height:"60%", background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}}>
+
+</div> */}
+
+<Container className=' grid  grid-rows-1 gap-3 ml-10 mr-10 mt-28 col-lg-12'>
+      <Row className=' grid grid-cols-4 gap-3'>
+        <Col className=''>
+          <div className='h-32  bg-gray-200 rounded-2xl'>
+            <h5 className='font-bold pt-2 text-center'>Available Customers</h5>
+            <h5 className='font-bold pt-2 text-center'>38</h5>
+          </div>
+        </Col>
+        <Col>
+          <div className='h-32 bg-gray-200 rounded-2xl'>
+            <h5 className='font-bold pt-2 text-center'>Available Items</h5>
+            <h5 className='font-bold pt-2 text-center'>43</h5>
+          </div>
+        </Col>
+        <Col>
+          <div className='h-32 bg-gray-200 rounded-2xl'>
+            <h5 className='font-bold pt-2 text-center'>Available Employees</h5>
+            <h5 className='font-bold pt-2 text-center'>21</h5>
+          </div>
+        </Col>
+        <Col>
+          <div className='h-32 bg-gray-200 rounded-2xl'>
+            <h5 className='font-bold pt-2 text-center'>Available Bookings</h5>
+            <h5 className='font-bold pt-2 text-center'>13</h5>
+          </div>
+        </Col>
+      </Row>
+      {/* <Row className='grid grid-cols-1'>
+        <Col>
+          <div className=' h-32 bg-gray-200'>
+            <h1 className='font-bold pt-5'>Available Customers</h1>
+            <h1 className='font-bold pt-5'>38</h1>
+          </div>
+        </Col>
+      </Row> */}
+    </Container>
+
+    <Container className=' grid  grid-rows-1  ml-10 mr-10 mt-5'>
+      
+      <Row className=' grid grid-cols-1'>
+        <Col>
+          <div className=' h-96 bg-gray-200 rounded-2xl'></div>
+        </Col>
+      </Row>
+    </Container>
+  
+
+
+    </div>
+    
+
+    
+
+  )
 }
+
+export default Home
