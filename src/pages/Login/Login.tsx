@@ -9,13 +9,13 @@ function Login() {
     <div className=' w-10/12 h-full absolute right-0 top-0 bg-[#18284d] overflow-x-hidden'>
 
     <Row>
-        <Col sm={0} lg={7} md={3}>
+        <Col xs={0} sm={0} lg={7} md={3}>
           <div className=' d-none d-sm-block'>
           <h2 className=' relative mt-4 top-96 left-10 text-white'>Make your own Invoice</h2>
           </div>
         </Col>
 
-        <Col sm={8} lg={4} md={6}>
+        <Col xs={10} sm={8} lg={4} md={6}>
         <div className=' mt-28  relative' >
 
         
