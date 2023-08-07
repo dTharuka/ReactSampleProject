@@ -162,128 +162,274 @@ function Customer() {
 
       pdf.setFontSize(11);
 
-      const content = `
-                                                                                                                                                              Bismarck
-                                                                                                                                                  2nd Cross Street
-                                                                                                                                               Calabasa,Califonia
-                                                                                                                                                                   19210
-                                                                                                                                                       United States
-                                                                                                                                                    1-888-123-4567
+    
 
+    const address1=`
+    Bismarck
+    `
 
+    const address2=`
+    2nd Cross Street
+    `
 
+    const address3=`
+    Calabasa,Califonia
+    `
+
+    const address4=`
+    19210
+    `
+
+    const address5=`
+    United States
+    `
+    const address6=`
+    1-888-123-4567
+    `
+
+    pdf.text(address1,175,15);
+    pdf.text(address2,162,20);
+    pdf.text(address3,159,25);
+    pdf.text(address4,180,30);
+    pdf.text(address5,167.5,35);
+    pdf.text(address6,163.5,40);
+
+    const billedTo=`
+    Billed To 
+    `
+    const date=`
+    Date Issued 
+    `
+    const invoceNum=`
+    Invoice Number 
+    `
+    const amount=`
+    Amount Due
+    `
+    const dueDtae=`
+    Due Date
+    `
 
     
-    
-                                                                                                  
-    Thomson                                                                                 26/03/2021       INV-10012               $1,699.48
+    const dateText=`
+    26/03/2021
+    `
+    const invoceNumText=`
+    INV-10012 
+    `
+    const amountText=`
+    $1,699.48
+    `
+    const dueDtaeText=`
+    25/04/2021
+    `
+
+
+
+    pdf.setTextColor('#4287f5');
+    pdf.text(billedTo,10,75);
+    pdf.text(amount,170,75);
+    pdf.text(invoceNum,130,75);
+    pdf.text(date,95,75);
+    pdf.text(dueDtae,95,90);
+    pdf.setTextColor('#oooooo');
+
+   
+    pdf.text(amountText,174,80);
+    pdf.text(invoceNumText,130,80);
+    pdf.text(dateText,95,80);
+    pdf.text(dueDtaeText,95,95);
+
+
+    const billedAddress=`
+    Thomson
     3rd Cross Street
     Las Vegas
-    90210                                                                                      25/04/2021
+    90210
     United States
     1-888-123-8910
-
-    `;
-
-    const contentHeader =`
-    Billed To                                                                                  Date Issued      Invoice Number   Amount Due
     `
-    pdf.setTextColor('#4287f5');
-    pdf.text(contentHeader,10,68);
-    pdf.setTextColor('#oooooo');
 
-    const dateDue =`
-                                                                                                    Due Date
-    `;
-    pdf.setTextColor('#4287f5');
-    pdf.text(dateDue,10,82);
-    pdf.setTextColor('#oooooo');
+    pdf.text(billedAddress,10,80);
 
-    const headres =`
-    DESCRIPTION                                                                          RATE                     QTY                  AMOUNT
+
+
+    const description =`
+    DESCRIPTION
     `;
 
+    const rate =`
+    RATE
+    `;
+
+    const qty =`
+    QTY
+    `;
+
+    const amountHeader =`
+    AMOUNT
+    `;
 
    
    
+  
+    pdf.setTextColor('#4287f5');
+    pdf.text(description,10,133);
+    pdf.text(rate,117,133);
+    pdf.text(qty,148,133);
+    pdf.text(amountHeader,177,133);
+    pdf.setTextColor('#oooooo');
+
     
-    pdf.text(content, 10, 15);
-    // const line="-----------------------------------------------------------------------------------------------";
-    pdf.setTextColor('#4287f5');
-    pdf.text(headres,10,133);
-    pdf.setTextColor('#oooooo');
 
     const services =`
-    Services                                                                                    $55.00                       10                     $550.00
+    Services
     `
+    const servicesRate =`
+    $55.00
+    `
+    const servicesQty =`
+    10
+    `
+    const servicesAmount =`
+    $550.00
+    `
+
     pdf.text(services,10,145);
+    pdf.text(servicesRate,115,145);
+    pdf.text(servicesQty,152,145);
+    pdf.text(servicesAmount,180,145);
 
     pdf.setFontSize(9);
     const servicesDescription =`
-     Cost ofvarious services                                                                                       +Tax                                             
+     Cost ofvarious services                                            
     `
     pdf.text(servicesDescription,10,152);
 
 
+
     pdf.setFontSize(11);
     const consulting =`
-    Consulting                                                                                 $75.00                       10                     $750.00
-    ` 
+    Consulting
+    `
+    const consultingRate =`
+    $75.00
+    `
+    const consultingQty =`
+    10
+    `
+    const consultingAmount =`
+    $750.00
+    `
+
     pdf.text(consulting,10,163);
+    pdf.text(consultingRate,115,163);
+    pdf.text(consultingQty,152,163);
+    pdf.text(consultingAmount,180,163);
 
     pdf.setFontSize(9);
     const consultingDescription =`
-     Consultant for your business                                                                               +Tax                                             
+     Consultant for your business                                            
+    `;
+
+    const taxText=`
+    +Tax
     `
     pdf.text(consultingDescription,10,170);
+    pdf.text(taxText,120.5,152);
+    pdf.text(taxText,120.5,170);
+    pdf.text(taxText,120.5,188);
 
     pdf.setFontSize(11);
+   
+
     const materials =`
-    Materials                                                                                   $90.00                       10                     $900.00
-    ` 
+    Materials
+    `
+    const materialsRate =`
+    $90.00
+    `
+    const materialsQty =`
+    10
+    `
+    const materialsAmount =`
+    $900.00
+    `
+
     pdf.text(materials,10,181);
+    pdf.text(materialsRate,115,181);
+    pdf.text(materialsQty,152,181);
+    pdf.text(materialsAmount,180,181);
 
     pdf.setFontSize(9);
     const materialsDescription =`
-     Cost of materials and supplies to complete job                                                  +Tax                                             
+     Cost of materials and supplies to complete job                                            
     `
     pdf.text(materialsDescription,10,188);
 
     pdf.setFontSize(11);
-    const subTotal =`
-                                                                                                            Subtotal                                      $2200.00
-    `
-    pdf.text(subTotal,10,200);
+    
+    const subTotal=`
+    Subtotal
+    `;
 
-    const discount =`
-                                                                                                            Discount                                      -$179.84
-    `
-    pdf.text(discount,10,207);
+    const subTotalPrice=`
+    $2200.00
+    `;
 
-    const tax =`
-                                                                                                                   Tax                                        +$80.93
-    `
-    pdf.text(tax,10,214);
+    const discount=`
+    Discount
+    `;
+    const disconutPrice=`
+    -$179.84
+    `;
 
-    const total =`
-                                                                                                                  Total                                     $2101.09
-    `
-    pdf.text(total,10,223);
+    const tax=`
+    Tax
+    `;
 
-    const deposit =`
-                                                                                                                  Deposit Requested                $169.95
-    `
-    pdf.text(deposit,10,230);
+    const taxPrice=`
+    +$80.93
+    `;
 
-    const depositDue =`
-                                                                                                                  Deposit Due                           $169.95
-    `
-    pdf.text(depositDue,10,239);
+    const total=`
+    Total
+    `;
+    const totalPrice=`
+    $2101.09
+    `;
 
-    const depositDue2 =`
-                                                                                                                  Deposit Due                           $169.95
-    `
-    pdf.text(depositDue2,10,239);
+    const deposit=`
+    Deposit Requested
+    `;
+    const depositPrice=`
+    $169.95
+    `;
+
+    const depositDue=`
+    Deposit Due
+    `;
+    const depositDuePrice=`
+    $169.95
+    `;
+    
+
+    pdf.text(subTotal,121,200);
+    pdf.text(subTotalPrice,178,200);
+    pdf.text(discount,120,207);
+    pdf.text(disconutPrice,179,207);
+    pdf.text(tax,128.5,214);
+    pdf.text(taxPrice,180.5,214);
+    pdf.text(total,126.5,223);
+    pdf.text(totalPrice,178,223);
+    pdf.text(deposit,102,230);
+    pdf.text(depositPrice,180,230);
+    pdf.text(depositDue,113.5,239);
+    pdf.text(depositDuePrice,180,239);
+    pdf.text(depositDue,113.5,239);
+    pdf.text(depositDuePrice,180,239);
+
+
 
     pdf.setTextColor('#4287f5');
     const noteHeader =`
@@ -325,50 +471,16 @@ function Customer() {
 
     pdf.line(14, 177, 198, 177);
 
-    pdf.line(106, 221, 198, 221);
+    pdf.line(106, 221, 199, 221);
 
     pdf.setDrawColor(0, 0, 245);
-    pdf.line(106, 237, 198, 237);
-    pdf.line(106, 237.3, 198, 237.3);
+    pdf.line(106, 237, 199, 237);
+    pdf.line(106, 237.3, 199, 237.3);
 
 
-    //  //table header eke pahala line eka
-    // pdf.line(14, 110, 207, 110);  
-
-    //  //left side line eka
-    //  pdf.line(14, 102, 14, 125);  
-
-    //  //right side line eka
-    //  pdf.line(207, 102, 207, 125);  
-
-    //  //table bottom eke line eka
-    // pdf.line(14, 125, 207, 125);
-
-    // //separate lines
-    // pdf.line(40, 102, 40, 125);
-    // pdf.line(73, 102, 73, 125);
-    // pdf.line(125, 102, 125, 125);
-    // pdf.line(145, 102, 145, 125);  
-    // pdf.line(185, 102, 185, 125);  
+    
 
     pdf.setDrawColor(0); 
-    // pdf.setTextColor(0, 0, 255);
-    // pdf.text(line, 10, 10);
-    // pdf.setTextColor(0, 0, 0);
-   
-
-  
-  //     const content = `
-  //     Customer ID: ${cusID}
-  //     Name: ${cusName}
-  //     Email: ${cusEmail}
-  //     Salary: ${cusSalary}
-  //     Address: ${cusAddress}
-  //     Postal Code: ${cusPostalCode}
-  // `;
-
-  //     pdf.addPage();
-  //     pdf.text(content, 10, 10);
       
       
       pdf.save('customer_details.pdf');

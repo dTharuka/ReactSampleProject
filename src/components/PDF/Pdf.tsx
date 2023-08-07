@@ -31,7 +31,7 @@ function Pdf(props:customerProp) {
 
   return (
     <div>
-          <PDFViewer>
+          <PDFViewer className=' h-96'>
         <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
