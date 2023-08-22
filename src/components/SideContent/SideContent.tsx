@@ -16,7 +16,7 @@ function SideContent() {
 
   return (
     // background: "#5f6c82",
-    <div className="h-screen w-2/12 relative left-0 d-none d-md-block" style={{  background: "#5f6c82", color: "#ffffff", boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+    <div className="h-screen w-2/12 relative left-0 d-none d-md-block" style={{  background: "#273b5e", color: "#ffffff", boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
       <Container className='pt-28 pl-2 grid gap-5'>
       {/* className='pt-28 pl-2 grid gap-5' */}
           <Col sm={0} lg={12} md={12}>

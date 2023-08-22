@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import $, { data } from "jquery";
@@ -9,6 +9,9 @@ import ReactDOM from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import jsPDF from 'jspdf';
 import 'bootstrap/dist/css/bootstrap.css';
+import userImage from "./../../assets/user.png";
+import { AiOutlineCloudDownload } from 'react-icons/ai';
+import { Chart } from 'chart.js';
 
 
 type customerProp={
@@ -23,6 +26,8 @@ type customerProp={
 
 
 function Customer() {
+
+
   const [cusID, idChange] = useState("");
   const [cusName, nameChange] = useState("");
   const [cusEmail, emailChange] = useState("");
@@ -30,7 +35,7 @@ function Customer() {
   const [cusAddress, addressChange] = useState("");
   const [cusPostalCode, postalCodeChange] = useState("");
 
-  
+  let serviceAmount=0;
 
   
   
@@ -91,6 +96,14 @@ function Customer() {
     // alert(JSON.stringify(responseBody));
   };
 
+  const calcServiceAmount = () => {
+    let qty = cusAddress;
+    let rate = cusSalary;
+    serviceAmount =( parseInt(qty) * parseInt(rate));
+    
+    
+  }
+
   // function formatString(property: string, value: string): string {
   //   const formattedProperty = property.padEnd(15, ' ');
   //   const formattedValue = value.padEnd(30, ' ');
@@ -124,29 +137,30 @@ function Customer() {
 
  
     
-      const pdfComponent= <Pdf pdf={pdf}/>
+      // const pdfComponent= <Pdf pdf={pdf}/>
       
 
 
     const pdfContainer = document.getElementById('cusPdf');
     if (pdfContainer) {
-      pdfContainer.innerHTML = ''; 
-      ReactDOM.render(pdfComponent, pdfContainer);
+      // pdfContainer.innerHTML = ''; 
+      // ReactDOM.render(pdfComponent, pdfContainer);
 
 
       //-----new--------
-      const downloadBtn = document.createElement('button');
-      downloadBtn.style.background = '#039b48';
-      downloadBtn.style.color = '#ffffff';
-      downloadBtn.style.borderRadius = '5px';
-      downloadBtn.style.marginTop = '3px';
-      downloadBtn.style.fontSize = '90%';
-      downloadBtn.style.width = '40%';
-      downloadBtn.style.padding = '3px';
-      downloadBtn.innerText = 'Download PDF';
+      // const downloadBtn = document.createElement('button');
+      // downloadBtn.style.background = '#039b48';
+      // downloadBtn.style.color = '#ffffff';
+      // downloadBtn.style.borderRadius = '5px';
+      // downloadBtn.style.marginTop = '3px';
+      // downloadBtn.style.fontSize = '90%';
+      // downloadBtn.style.width = '40%';
+      // downloadBtn.style.padding = '3px';
+      // downloadBtn.innerText = 'Download PDF';
 
     
-    downloadBtn.addEventListener('click', () => {
+    // downloadBtn.addEventListener('click', () => {
+      $("#downloadPdfIcon").click(() => {
       
       // const pdf = new jsPDF();
       
@@ -227,10 +241,10 @@ function Customer() {
 
 
     pdf.setTextColor('#4287f5');
-    pdf.text(billedTo,10,75);
-    pdf.text(amount,170,75);
-    pdf.text(invoceNum,130,75);
-    pdf.text(date,95,75);
+    pdf.text(billedTo,10,74);
+    pdf.text(amount,170,74);
+    pdf.text(invoceNum,130,74);
+    pdf.text(date,95,74);
     pdf.text(dueDtae,95,90);
     pdf.setTextColor('#oooooo');
 
@@ -282,17 +296,19 @@ function Customer() {
 
     
 
+    
+
     const services =`
     Services
     `
     const servicesRate =`
-    $55.00
+    $${cusSalary}.00
     `
     const servicesQty =`
-    10
+    ${cusAddress}
     `
     const servicesAmount =`
-    $550.00
+    $${serviceAmount}.00
     `
 
     pdf.text(services,10,145);
@@ -442,6 +458,21 @@ function Customer() {
     Thank you for your business !
     ` 
     pdf.text(notes,10,260);
+   
+    
+    
+    const  linkedin=`
+    Go to Linkedin -: 
+    `;
+    pdf.text(linkedin,10,265);
+    const url=`
+    ${"https://www.linkedin.com/in/dakshina-rajapaksha/"}
+    `;
+    pdf.setTextColor('#4287f5');
+    pdf.text(url,41,265);
+    pdf.setTextColor('#oooooo');
+
+
 
     pdf.setTextColor('#4287f5');
     const termsHeader =`
@@ -454,6 +485,9 @@ function Customer() {
     Please pay within 30 days using the link in your invoice email.
     ` 
     pdf.text(terms,10,280);
+
+    pdf.addImage(userImage, 'PNG', 10, 15, 20, 20);
+
 
    
   
@@ -485,7 +519,7 @@ function Customer() {
       
       pdf.save('customer_details.pdf');
     });
-    pdfContainer.appendChild(downloadBtn);
+    // pdfContainer.appendChild(downloadBtn);
 
 
     }
@@ -522,11 +556,11 @@ function Customer() {
   // };
 
   return (
-    <div className=' bg-white w-10/12 h-full absolute right-0 top-0 '>
+    <div className=' bg-[#5f6c82] w-10/12 h-full absolute right-0 top-0 '>
       <div>
 
 
-<Form className=' mt-24 ml-5 pl-5 w-3/5 rounded-lg' style={{boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+<Form className=' mt-24 ml-5 pl-5 w-3/5 rounded-lg bg-white' style={{boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
 {/* className='grid grid-rows-3 grid-cols-3  mt-24 mx-10' */}
 <Row>
   <Col sm={12} lg={4} md={6}>
@@ -551,19 +585,19 @@ function Customer() {
         {/* <Row> */}
   <Col sm={12} lg={4} md={6}>
   <Form.Group className=" mb-4 text-center" controlId="customerSalary">
-        <Form.Label >Customer Salary</Form.Label>
+        <Form.Label >Rate</Form.Label>
         <Form.Control onChange={handleInputChange} name='cusSalary' id='cusSalary' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer Salary" />
       </Form.Group></Col>
 
       <Col sm={12} lg={4} md={6}>
       <Form.Group className="mb-4 text-center" controlId="customerAddress">
-        <Form.Label >Customer Address</Form.Label>
+        <Form.Label >Qty</Form.Label>
         <Form.Control onChange={handleInputChange} name='cusAddress' id='cusAddress' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter customer Address" />
       </Form.Group></Col>
 
         <Col sm={12} lg={4} md={6}>
         <Form.Group className="mb-4 text-center" controlId="postalCode">
-        <Form.Label>Postal Code</Form.Label>
+        <Form.Label>Invoice Number</Form.Label>
         <Form.Control onChange={handleInputChange} name='cusPostalCode' id='cusPostalCode' className=' mt-0 pl-2 h-1/2 rounded-md border-0' style={{ width: "90%",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}} type="text" placeholder="Enter Postal Code" />
       </Form.Group></Col>
         {/* </Row> */}
@@ -580,6 +614,10 @@ function Customer() {
             onClick={(e) => {
               // handleSubmit();
               handleSaveCustomer();
+              calcServiceAmount();
+              $("#cusPdf").show();
+              $("#pdfHeader").show();
+              
               // $("#cusPdf").append(<Pdf cusID={$("#cusID").val()?.toString()} cusName={''} cusEmail={''} cusSalary={''} cusAddress={''} cusPostalCode={''}/>);
               // <Pdf cusID={cusID} cusName='' cusEmail='' cusSalary='' cusAddress='' cusPostalCode='' />;
               // $("#cusPdf").append(<Pdf cusID={cusID} cusName='' cusEmail='' cusSalary='' cusAddress='' cusPostalCode='' />);
@@ -618,7 +656,73 @@ function Customer() {
       
       
       </div>
-      <div className=' absolute  mt-10 left-2/3 top-14' id='cusPdf'></div>
+      {/* <div className=' absolute  mt-10 left-2/3 top-14' id='cusPdf'></div> */}
+      <div className=' h-12 w-80 bg-gray-700 absolute top-20 right-10 border-1 border-slate-950' id='pdfHeader' style={{display:"none"}}>
+      <h5 className='font-serif inline-block absolute text-white pl-8 mb-0 mt-3' ><AiOutlineCloudDownload  className=' cursor-pointer' id='downloadPdfIcon' /> </h5>
+      </div>
+
+      <div className=' h-2/3 w-80 bg-white absolute top-32 right-10 border-1 border-slate-950' id='cusPdf' style={{display:"none"}}>
+
+      <h5 className='text-right pr-1 pt-4 mb-0' style={{fontSize: "9px"}}>Bismarck</h5>
+      <h5 className='text-right pr-1 mb-0' style={{fontSize: "9px"}}>2nd Cross Street</h5>
+      <h5 className='text-right pr-1 mb-0' style={{fontSize: "9px"}}>Calabasa,Califonia</h5>
+      <h5 className='text-right pr-1 mb-0' style={{fontSize: "9px"}}>19210</h5>
+      <h5 className='text-right pr-1 mb-0' style={{fontSize: "9px"}}>United States</h5>
+      <h5 className='text-right pr-1 mb-0' style={{fontSize: "9px"}}>1-888-123-4567</h5>
+
+
+      <pre className=' text-left pl-1 mb-0 mt-3 text-cyan-400' style={{fontSize: "9px"}}>Billed To             Date Issued   Invoice Number   Amount Due</pre>
+      
+
+
+      <pre className='text-left pl-1 mb-0' style={{fontSize: "9px"}}>Thomson               26/03/2021    INV-10012        $1,699.48</pre>
+      
+
+
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>3rd Cross Street</h5>
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>Las Vegas</h5>
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>90210</h5>
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>United States</h5>
+      <h5 className='pl-1 mb-2' style={{fontSize: "9px"}}>1-888-123-8910</h5>
+      
+
+      <div className=' h-px bg-cyan-400 mt-3 relative' style={{width:"98%",left:"1%"}}></div>
+
+      <pre className=' text-left pl-1 mb-0 mt-2 text-cyan-400' style={{fontSize: "9px"}}>DESCRIPTION                       RATE        QTY        AMOUNT</pre>
+      <pre className=' text-left pl-1 mb-0 mt-px' style={{fontSize: "9px"}}>Services                          ${cusSalary}      {cusAddress}        ${parseInt(cusSalary)*parseInt(cusAddress)}.00</pre>
+      <pre className=' text-left pl-1 mb-0' style={{fontSize: "8px"}}>Cost ofvarious services                  +Tax</pre>
+
+      <hr className=' relative mt-1 mb-0' style={{width:"98%",left:"1%"}}></hr>
+
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>Consulting                        $75.00      10        $750.00</pre>
+      <pre className=' text-left pl-1 mb-0' style={{fontSize: "8px"}}>Consultant for your business             +Tax</pre>
+
+      <hr className=' relative mt-1 mb-0' style={{width:"98%",left:"1%"}}></hr>
+
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>Materials                         $90.00      10        $900.00</pre>
+      <pre className=' text-left pl-1 mb-0' style={{fontSize: "8px"}}>Cost of materials                        +Tax</pre>
+
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>                                     Subtotal          $2200.00</pre>
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>                                     Discount          -$179.84</pre>
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>                                          Tax           +$80.93</pre>
+
+      <hr className=' relative mt-px mb-0' style={{width:"55%",left:"44%"}}></hr>
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>                                        Total          $2101.09</pre>
+      <pre className=' text-left pl-1 mb-0 mt-0.5' style={{fontSize: "9px"}}>                            Deposit Requested           $169.95</pre>
+
+      <div className=' h-px bg-cyan-400 mt-1 relative' style={{width:"55%",left:"44%"}}></div>
+
+      <pre className=' text-left pl-1 mb-0 mt-0.5 font-bold' style={{fontSize: "9px"}}>                                  Deposit Due           $169.95</pre>
+
+      <h5 className='pl-1 mt-2 mb-0 text-cyan-400' style={{fontSize: "9px"}}>Notes</h5>
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>Thank you for your business !</h5>
+      <h5 className='pl-1 mb-0 inline-block' style={{fontSize: "9px"}}>Go to Linkedin -: </h5>
+      <h5 className='pl-1 mb-0 text-cyan-400 inline-block' style={{fontSize: "7px"}}>https://www.linkedin.com/in/dakshina-rajapaksha/</h5>
+
+      <h5 className='pl-1 mb-0 text-cyan-400' style={{fontSize: "9px"}}>Terms</h5>
+      <h5 className='pl-1 mb-0' style={{fontSize: "9px"}}>Please pay within 30 days using the link in your invoice email.</h5>
+      </div>
+
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import { AiOutlineMenu } from 'react-icons/ai';
+import userImage from "./../../assets/user.png";
+
 
 const Header = () => {
   const activeLink = "border-b-2";
@@ -15,51 +17,42 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 md:drop-shadow-xl z-10 w-10/12 h-16 right-0" style={{background: "#ffffff",color:"red", gridGap: "10px", boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+    <div className="fixed top-0 z-10 w-10/12 h-16 right-0" style={{background: "#273b5e"}}>
+      <div className=' h-5/6 bg-[#5f6c82]'>
+        <input className=' w-1/3 mt-2 ml-5 pl-5 h-3/4 rounded-2xl bg-[#ecedce] mr-96' placeholder='Search Bar'></input>
+        <h5 className=' inline-block relative text-white ml-52'>Kevin Peter</h5>
+        <div className=' inline-block h-9 top-2 ml-5 absolute w-px bg-white'></div>
+        <img className=' h-10 w-10 inline-block ml-10 mb-2 bg-white' style={{borderRadius:"100%"}} src={userImage}/>
 
-      <div className='w-full h-full'>
-        <div className='flex justify-between h-full w-full items-center'>
-          <div className='w-1/2'>
-            {/* methanata icon eka danna */}
-            {/* <h5 className='font-serif text-black ml-10' ><AiOutlineMenu onClick={drover} className=' cursor-pointer' /> </h5> */}
-          </div>
-          <div className='w-1/3'>
-            <div className='flex pr-5 justify-between'>
-
-              <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/"} style={{ color: 'gray' }}>Home</NavLink>
-              <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/book"} style={{ color: 'gray' }}>Book</NavLink>
-              <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/order"} style={{ color: 'gray' }}>Order</NavLink>
-              <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/profile"} style={{ color: 'gray' }}>Profile</NavLink>
-              <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/login"} style={{ color: 'gray' }}>Login</NavLink>
-
-            </div>
-          </div>
-        </div>
       </div>
 
-{/* <Container className=' grid  grid-rows-1 gap-1 mt-0'>
-      <Row className=' grid grid-cols-6 gap-1'>
-      <Col className=' bg-green-500 w-6/12'>
-        <h1>Dashbord</h1>
+
+
+ {/* <div className=' h-5/6 bg-[#5f6c82]'>
+<Container>
+<Row>
+<Col sm={12} lg={4} md={4}>
+        <input className=' w-full mt-2 h-3/4 rounded-2xl bg-[#ecedce]' placeholder='Search Bar'></input>
         </Col>
-        <Col className=' bg-green-500 w-6/12 pl-28'>
-        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/"}>Home</NavLink>
+
+        <Col sm={12} lg={2} md={4}>
+        <h5 className=' inline-block relative text-white'>Kevin Peter</h5>
         </Col>
-        <Col className=' bg-red-400 w-6/12'>
-        <NavLink className={({ isActive }) => isActive ? activeLink : normalLink} to={"/book"}>Book</NavLink>
+
+        <Col sm={12} lg={1} md={4}>
+        <div className=' inline-block h-9 top-2 ml-5  w-px bg-white'></div>
         </Col>
-        <Col className=' bg-green-500 w-6/12'>
-        <NavLink  className={({ isActive }) => isActive ? activeLink : normalLink} to={"/order"}>Order</NavLink>
+
+        <Col sm={12} lg={2} md={4}>
+        <img className=' h-10 w-10 inline-block ml-10 mb-2 bg-white' style={{borderRadius:"100%"}} src={userImage}/>
         </Col>
-        <Col className=' bg-green-500 w-6/12'>
-        <NavLink  className={({ isActive }) => isActive ? activeLink : normalLink} to={"/profile"}>Profile</NavLink>
-        </Col>
-        <Col className=' bg-green-500 w-6/12'>
-        <NavLink  className={({ isActive }) => isActive ? activeLink : normalLink} to={"/login"}>Login</NavLink>
-        </Col>
-      </Row>
-    </Container> */}
-  
+
+        </Row>
+      </Container>
+      </div>  */}
+      
+      
+
     </div>
   );
 };

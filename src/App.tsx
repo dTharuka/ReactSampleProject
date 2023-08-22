@@ -24,6 +24,7 @@ import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import SideContent from './components/SideContent/SideContent';
 import SideHeader from './components/SideHeader/SideHeader';
+import NewSideContent from './components/NewSideContent/NewSideContent';
 
 const App = () => {
   useEffect(() => {
@@ -33,9 +34,10 @@ const App = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <SideContent/>
-      <SideHeader/>
+      {/* <SideContent/> */}
+      {/* <SideHeader/> */}
       <Content />
+      <NewSideContent/>
     </div>
   );
 };

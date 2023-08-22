@@ -1,92 +1,218 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Content from '../../components/Content/Content';
 import Header from '../../components/Header/Header';
 import SideContent from '../../components/SideContent/SideContent';
 import SideHeader from '../../components/SideHeader/SideHeader';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Chart } from 'chart.js';
 
 
 
 
 function Home() {
 
+  let values=[3,19,3,8,3,2];
+  
+  const chartRef = useRef(null);
+  const charLine = useRef(null);
+  const charPie = useRef(null);
+
+  useEffect(() => {
+
+
+    if (chartRef.current) {
+      new Chart(chartRef.current, {
+        type: 'bar',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: 'Bar Chart',
+            data: [values[0], values[1], values[2], values[3], values[4], values[5]],
+            // backgroundColor: "#FFD700",
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+
+    if (charLine.current) {
+      new Chart(charLine.current, {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: 'Line Chart',
+            data: [10, 15, 0, 20, 12, 8],
+            // backgroundColor: "#eb4034",
+            // borderColor:'#FFD700',
+            // pointRadius: 10,
+            pointStyle:false,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              // text: 'Chart.js Line Chart'
+            }
+          },
+          scales: {
+            x: {
+              display: false,
+              title: {
+                display: false,
+                text: 'Color'
+              }
+            },
+            y: {
+              display: false,
+              title: {
+                display: false,
+                text: 'Value'
+              }
+            }
+          }
+        }
+      });
+    }
+
+
+    if (charPie.current) {
+      new Chart(charPie.current, {
+        type: 'pie',
+        data: {
+          labels: ['Blue', 'Red', 'Orange', 'Yellow', 'Green', 'Purple'],
+          datasets: [{
+            label: 'Pie Chart',
+            data: [10, 15, 7, 20, 12, 8],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Chart.js Pie Chart'
+            }
+          }
+        }
+      });
+    }
+
+  })
+
 
 
   return (
     
     // <div style={{position:"absolute", height:"92%", width: "85%",left:"15%",background: "#ffffff",top:"8%"}}>
-    <div className=' bg-white w-10/12 h-full absolute right-0 top-0'>
-       {/* <Header />
-      <SideContent/>
-      <SideHeader/>
-      <Content /> */}
-
-      {/* <div className='flex mx-10 mt-10' style={{ gap: '10px',height:"20%"}}>
-        <div style={{ flex: 1 ,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}}>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}>Available Customers</h1>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>38</h1>
-        </div>
-        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Employees </h1>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>25</h1>
-        </div>
-        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Items </h1>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>43</h1>
-        </div>
-        <div style={{ flex: 1,height:"100%",width:"100%",background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center' }}> Available Bookings </h1>
-        <h1 className='font-bold pt-5' style={{ textAlign: 'center',fontSize:"200%" }}>21</h1>
-        </div>
-</div>
-
-<div className='mx-10 mt-10' style={{height:"60%", background:"#ffffff",borderRadius:"10px",boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"}}>
-
-</div> */}
-
-<Container className=' grid  grid-rows-1 gap-3 ml-10 mr-10 mt-28 col-lg-12'>
-      <Row className=' grid grid-cols-4 gap-3'>
-        <Col className=''>
-          <div className='h-32  bg-gray-200 rounded-2xl'>
-            <h5 className='font-bold pt-2 text-center'>Available Customers</h5>
-            <h5 className='font-bold pt-2 text-center'>38</h5>
-          </div>
-        </Col>
-        <Col>
-          <div className='h-32 bg-gray-200 rounded-2xl'>
-            <h5 className='font-bold pt-2 text-center'>Available Items</h5>
-            <h5 className='font-bold pt-2 text-center'>43</h5>
-          </div>
-        </Col>
-        <Col>
-          <div className='h-32 bg-gray-200 rounded-2xl'>
-            <h5 className='font-bold pt-2 text-center'>Available Employees</h5>
-            <h5 className='font-bold pt-2 text-center'>21</h5>
-          </div>
-        </Col>
-        <Col>
-          <div className='h-32 bg-gray-200 rounded-2xl'>
-            <h5 className='font-bold pt-2 text-center'>Available Bookings</h5>
-            <h5 className='font-bold pt-2 text-center'>13</h5>
-          </div>
-        </Col>
+    <div className=' bg-[#5f6c82] w-10/12 h-full absolute right-0 top-0'>
+      <Container className=' mt-24 mb-0 ml-5'>
+      <Row >
+      <Col xs={12} sm={12} lg={12} md={12}>
+      <h5 className=' text-white'>Welcome back, Kevin</h5>
+      </Col>
+      <Col xs={12} sm={12} lg={12} md={12}>
+      <h5 className=' mt-0 mb-0 ml-0 text-xs text-white'>Manage Your Invoice here.</h5>
+      </Col>
       </Row>
-      {/* <Row className='grid grid-cols-1'>
-        <Col>
-          <div className=' h-32 bg-gray-200'>
-            <h1 className='font-bold pt-5'>Available Customers</h1>
-            <h1 className='font-bold pt-5'>38</h1>
+      </Container>
+
+      
+
+<Container className='ml-10 mr-10 mt-5'>
+      <Row className='gap-2 pl-3 pr-3'>
+        <Col className=' p-0' >
+          <div className=' h-60 bg-white rounded-lg'>
+            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
+            <h5 className=' pt-2 text-center text-white'>38</h5> */}
+
+            <canvas ref={chartRef} id="myChart"></canvas>
           </div>
         </Col>
-      </Row> */}
+        <Col className='p-0' >
+        <div className='h-60 bg-[#262347] rounded-lg'>
+            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
+            <h5 className=' pt-2 text-center text-white'>45</h5> */}
+
+
+            {/* <div className=' absolute bg-[#262347] h-16 rounded-lg' style={{width:"32%"}}></div> */}
+            {/* <div className=' absolute bg-[#262347] rounded-lg' style={{width:"32%" , top:"48.1%", height:"69px"}}></div>
+            <div className=' absolute bg-[#262347] w-6 h-60 rounded-lg' style={{left:"64.2%"}}></div>
+            <div className=' absolute bg-[#262347] w-7 h-60 rounded-lg'></div> */}
+           
+
+            <div>
+            <canvas ref={charLine} id="myLineChart"></canvas>
+            </div>
+          </div>
+        </Col>
+        <Col className='p-0 '>
+        <div className=' h-60 bg-white rounded-lg'>
+            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
+            <h5 className=' pt-2 text-center text-white'>29</h5> */}
+            <canvas className=' pb-2' ref={charPie} id="myPieChart"></canvas>
+          </div>
+        </Col>
+        {/* <Col className='p-0'>
+        <div className='h-40 bg-[#273b5e] rounded-lg'>
+            <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
+            <h5 className=' pt-2 text-center text-white'>18</h5>
+          </div>
+        </Col> */}
+      </Row>
     </Container>
 
-    <Container className=' grid  grid-rows-1  ml-10 mr-10 mt-5'>
+    <Container className=' grid  grid-rows-1  ml-10 mr-10 mt-3'>
       
       <Row className=' grid grid-cols-1'>
-        <Col>
-          <div className=' h-96 bg-gray-200 rounded-2xl'></div>
+        <Col xs={4} sm={6} lg={12} md={7}>
+          <div className=' h-72 bg-gray-50'>
+            <pre className='pt-3'>         DATE                 INVOICE NUMBER                 CUSTOMER NAME                   STATUS                   DUE DATE                AMOUNT</pre>
+
+            <div className=' h-px px-2 relative bg-black'></div>
+            <div className=' h-4 w-4 bg-[#273b5e] inline-block relative left-5'></div>
+            <pre className='pt-3 inline-block relative left-10 mb-0'>28 Jul 2023            INVO-0014                        Mr.Udara</pre>
+            <pre className=' text-green-500 inline-block pt-3 ml-52  mb-0'>PAID</pre>
+            <pre className=' inline-block pt-3 ml-36  mb-0'>08 Aug 2023               LKR 0.00</pre>
+
+            <hr className='  relative  m-0'></hr>
+            <div className=' h-4 w-4 bg-[#273b5e] inline-block relative left-5'></div>
+            <pre className='pt-3 inline-block relative left-10 mb-0'>28 Jul 2023            INVO-0014                        Mr.Udara</pre>
+            <pre className=' text-green-500 inline-block pt-3 ml-52  mb-0'>PAID</pre>
+            <pre className=' inline-block pt-3 ml-36  mb-0'>08 Aug 2023               LKR 0.00</pre>
+
+            <hr className='  relative  m-0'></hr>
+            <div className=' h-4 w-4 bg-[#273b5e] inline-block relative left-5'></div>
+            <pre className='pt-3 inline-block relative left-10 mb-0'>28 Jul 2023            INVO-0014                        Mr.Udara</pre>
+            <pre className=' text-red-500 inline-block pt-3 ml-52  mb-0'>UNPAID</pre>
+            <pre className=' inline-block pt-3 ml-32  mb-0'>08 Aug 2023               LKR 0.00</pre>
+
+            <hr className='  relative  m-0'></hr>
+            <div className=' h-4 w-4 bg-[#273b5e] inline-block relative left-5'></div>
+            <pre className='pt-3 inline-block relative left-10 mb-0'>28 Jul 2023            INVO-0014                        Mr.Udara</pre>
+            <pre className=' text-red-500 inline-block pt-3 ml-52  mb-0'>UNPAID</pre>
+            <pre className=' inline-block pt-3 ml-32  mb-0'>08 Aug 2023               LKR 0.00</pre>
+
+          </div>
         </Col>
       </Row>
     </Container>

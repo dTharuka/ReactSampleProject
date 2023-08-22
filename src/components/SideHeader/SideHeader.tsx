@@ -11,7 +11,7 @@ function SideHeader() {
   };
 
   return (
-    <div className=' w-2/12 absolute h-16 left-0 top-0 d-none d-md-block' style={{background: "#273b5e", boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px" }}>
+    <div className=' w-2/12 absolute h-16 left-0 top-0 d-none d-md-block' style={{background: "#273b5e" }}>
         <h5 className=' pt-4 pl-2 mb-0 text-gray-300  relative inline-block'>Rajapaksha Group</h5>
         <h5 className='font-serif inline-block absolute text-white pl-8 mb-0 pt-4' ><AiOutlineMenu onClick={drover} className=' cursor-pointer' /> </h5>
     </div>
