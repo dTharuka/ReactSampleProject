@@ -51,9 +51,15 @@ function Home() {
           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: 'Line Chart',
-            data: [10, 15, 0, 20, 12, 8],
-            // backgroundColor: "#eb4034",
-            // borderColor:'#FFD700',
+            data: [values[0], values[1], values[2], values[3], values[4], values[5]],
+            backgroundColor: "#eb4034",
+            // borderColor: {
+            //   gradient: true,
+            //   start: 'rgba(235, 64, 52, 1)',
+            //   end: 'rgba(0, 0, 255, 1)'
+            // },
+            borderColor:'#eb4034',
+            tension: 0.5,
             // pointRadius: 10,
             pointStyle:false,
             borderWidth: 1
@@ -67,7 +73,7 @@ function Home() {
             },
             title: {
               display: true,
-              // text: 'Chart.js Line Chart'
+              text: '16,658',
             }
           },
           scales: {
@@ -138,44 +144,49 @@ function Home() {
 
       
 
-<Container className='ml-10 mr-10 mt-5'>
+<Container className=' ml-10 mr-10 mt-5'>
       <Row className='gap-2 pl-3 pr-3'>
         <Col className=' p-0' >
-          <div className=' h-60 bg-white rounded-lg'>
-            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
-            <h5 className=' pt-2 text-center text-white'>38</h5> */}
+          <div className='  h-40 bg-[#262347] rounded-lg'>
+          <div className=' inline-block w-2/6 bg-[#eb4034] relative h-full rounded-lg'></div>
 
-            <canvas ref={chartRef} id="myChart"></canvas>
+           
+            <div className=' inline-block w-4/6 bg-[#312d58] h-full relative rounded-lg'>
+            </div>
           </div>
         </Col>
+
         <Col className='p-0' >
-        <div className='h-60 bg-[#262347] rounded-lg'>
-            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
-            <h5 className=' pt-2 text-center text-white'>45</h5> */}
-
-
-            {/* <div className=' absolute bg-[#262347] h-16 rounded-lg' style={{width:"32%"}}></div> */}
-            {/* <div className=' absolute bg-[#262347] rounded-lg' style={{width:"32%" , top:"48.1%", height:"69px"}}></div>
-            <div className=' absolute bg-[#262347] w-6 h-60 rounded-lg' style={{left:"64.2%"}}></div>
-            <div className=' absolute bg-[#262347] w-7 h-60 rounded-lg'></div> */}
+        <div className=' h-40 bg-[#312d58] rounded-lg'>
            
+           <div className=' inline-block w-2/6 bg-[#eb4034] relative h-full rounded-lg'>
+            {/* <h5 className=' text-center text-white pt-5'>Monthly</h5>
+            <h5 className=' text-center text-white'>Earnings</h5> */}
+           </div>
 
-            <div>
+           
+            <div className=' inline-block w-4/6 bg-[#312d58] h-full relative rounded-lg'>
             <canvas ref={charLine} id="myLineChart"></canvas>
             </div>
           </div>
         </Col>
+
         <Col className='p-0 '>
-        <div className=' h-60 bg-white rounded-lg'>
-            {/* <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
-            <h5 className=' pt-2 text-center text-white'>29</h5> */}
-            <canvas className=' pb-2' ref={charPie} id="myPieChart"></canvas>
+        <div className='  h-40 bg-[#262347] rounded-lg'>
+          <div className=' inline-block w-2/6 bg-[#eb4034] relative h-full rounded-lg'></div>
+
+           
+            <div className=' inline-block w-4/6 bg-[#312d58] h-full relative rounded-lg'></div>
           </div>
         </Col>
         {/* <Col className='p-0'>
-        <div className='h-40 bg-[#273b5e] rounded-lg'>
-            <h5 className='pt-2 text-center text-white '>MONTHLY INVOICES</h5>
-            <h5 className=' pt-2 text-center text-white'>18</h5>
+        <div className='  h-40 bg-[#262347] rounded-lg'>
+          <div className=' inline-block w-2/6 bg-[#eb4034] relative h-full rounded-lg'></div>
+
+           
+            <div className=' inline-block w-4/6 bg-[#312d58] h-full relative rounded-lg'>
+            <canvas ref={charLine} id="myLineChart2"></canvas>
+            </div>
           </div>
         </Col> */}
       </Row>

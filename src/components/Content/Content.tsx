@@ -1,4 +1,5 @@
 
+import { Dashboard } from '@mui/icons-material';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Book from '../../pages/Book';
@@ -22,7 +23,7 @@ const Content = () => {
         <Route path="/book" element={<Book />} />
         <Route path="/order" element={<Order />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/item" element={<Item />} />
         <Route path="/orderDetails" element={<OrderDetails />} />
         <Route path="/customer" element={<Customer />} />
